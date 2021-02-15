@@ -26,17 +26,38 @@ form input[type=submit] {
 <body>
 
 	<h3>Cadastro Pessoa</h3>
+	
 	<a class="waves-effect waves-light btn-small" href="/cadastropessoa"><--voltar</a>
 	<div th:each="p: ${pessoaobj}">
 		<div class="row">
 			<p>ID: <span th:text="${p.id}"></span></p>
 			<p>Nome: <span th:text="${p.nome}"></span></p>
 			<p>Sobrenome: <span th:text="${p.sobrenome}"></span></p>
-			<p>Idade: <span th:text="${p.idade}"></span></p>
-		
-		
-		</div>
+			<p>Idade: <span th:text="${p.idade}"></span></p>		
+		</div>	
+	</div>
 	
+	<h5>Telefones</h5>
+	
+	<div class="row">
+		<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s12">
+			<div class="row">
+				<div class="input-field col s6">
+					<label class="active" for="numero">Número:</label> <input
+						id="numero" name="numero" class="validator">
+				</div>
+				
+				<div class="input-field col s6">
+					<label class="active" for="tipo">Tipo:</label> <input
+						id="tipo" name="tipo" class="validator">
+				</div>
+				
+				<input type="submit" value="Adicionar" class="waves-effect waves-light btn-small" >
+			</div>
+			
+			
+
+		</form>
 	</div>
 
 
