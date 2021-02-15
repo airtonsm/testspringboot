@@ -27,14 +27,14 @@ public class PessoaContoller {
 		return modelAndView;
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/salvarpessoa")
+	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa") //dois asteríscos ignora o que vem antes na aurl
 	public ModelAndView salvar(Pessoa pessoa) {
 		pessoaRepository.save(pessoa);
 		
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
 		andView.addObject("pessoas", pessoasIt);
-		
+		andView.addObject("pessoaobj", new Pessoa());
 		return andView;
 	}
 	
@@ -43,6 +43,7 @@ public class PessoaContoller {
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
 		andView.addObject("pessoas", pessoasIt);
+		andView.addObject("pessoaobj", new Pessoa());
 		return andView;
 	}
 	
@@ -54,6 +55,18 @@ public class PessoaContoller {
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", pessoa.get());
+		return modelAndView;
+		
+	}
+	
+	@GetMapping("/removerpessoa/{idpessoa}")
+	public ModelAndView excluir(@PathVariable("idpessoa") Long idpessoa) {
+		
+		pessoaRepository.deleteById(idpessoa);
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		modelAndView.addObject("pessoas", pessoaRepository.findAll());
+		modelAndView.addObject("pessoaobj", new Pessoa());
 		return modelAndView;
 		
 	}
