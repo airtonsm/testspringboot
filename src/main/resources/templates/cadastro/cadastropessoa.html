@@ -9,20 +9,25 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <link type="text/css" rel="stylesheet"
-	href="materialize/css/materialize.css" media="screen,projection" />
+	href="/materialize/css/materialize.css" media="screen,projection" />
 <link type="text/css" rel="stylesheet"
-	href="materialize/css/materialize.min.css" media="screen,projection" />
+	href="/materialize/css/materialize.min.css" media="screen,projection" />
 </head>
 <body>
 
 	<h1>Cadastro Pessoa</h1>
 
-	<form action="salvarpessoa" method="post">
+	<form action="salvarpessoa" method="post" th:object="pessoaobj">
+	
+	
+		<label>ID :</label>
+		<input name="id" th:field="*{id}">
+		
 		<label>Nome: </label>
-		 <input name="nome"> 
+		 <input name="nome" th:field="*{nome}"> 
 		 
 		 <label>Sobrenome:</label>
-		<input name="sobrenome"> 
+		<input name="sobrenome" th:field="*{sobrenome}"> 
 		
 		<label>Idade: </label> 		
 		<input	name="idade"> 
@@ -44,6 +49,7 @@
 			<td th:text="${pessoa.id}"></td>
 			<td th:text="${pessoa.nome}"></td>
 			<td th:text="${pessoa.sobrenome}"></td>
+			<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
 		</tr>
 	</table>
 
