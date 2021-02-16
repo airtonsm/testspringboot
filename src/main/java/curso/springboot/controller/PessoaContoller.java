@@ -56,6 +56,19 @@ public class PessoaContoller {
 		andView.addObject("pessoaobj", new Pessoa());
 		return andView;
 	}
+	
+	@GetMapping("/telefones/{idpessoa}")
+	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) {
+
+		Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
+		Iterable<Telefone> telefones = telefoneRepository.findAll(); // brings all the people 
+		
+		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("telefones", telefones);
+		modelAndView.addObject("pessoaobj", pessoa.get());
+		return modelAndView;
+
+	}
 
 	@GetMapping("/editarpessoa/{idpessoa}")
 	public ModelAndView editar(@PathVariable("idpessoa") Long idpessoa) {
@@ -89,16 +102,7 @@ public class PessoaContoller {
 		return modelAndView;		
 	}
 	
-	@GetMapping("/telefones/{idpessoa}")
-	public ModelAndView telefones(@PathVariable("idpessoa") Long idpessoa) {
 
-		Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
-
-		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
-		modelAndView.addObject("pessoaobj", pessoa.get());
-		return modelAndView;
-
-	}
 	
 	@PostMapping("**/addfonePessoa/{pessoaid}")
 	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
