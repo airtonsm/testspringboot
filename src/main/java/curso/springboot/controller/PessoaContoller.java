@@ -64,7 +64,7 @@ public class PessoaContoller {
 		Iterable<Telefone> telefones = telefoneRepository.findAll(); // brings all the people 
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
-		modelAndView.addObject("telefones", telefones);
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(idpessoa));
 		modelAndView.addObject("pessoaobj", pessoa.get());
 		return modelAndView;
 
@@ -113,6 +113,7 @@ public class PessoaContoller {
 		telefoneRepository.save(telefone);
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
 		modelAndView.addObject("pessoaobj", pessoa);
 		
 		return modelAndView;
