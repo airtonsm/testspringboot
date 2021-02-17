@@ -1,5 +1,6 @@
 package curso.springboot.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +125,7 @@ public class PessoaContoller {
 	@GetMapping("/editartelefone/{telefoneid}")
 	public ModelAndView editarTelefone(@PathVariable("telefoneid") Long telefoneid) {
 		
-		Optional<Telefone> telefone = telefoneRepository.findById(telefoneid);
+		List<Telefone> telefone = telefoneRepository.getTelefones(telefoneid);
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("telefoneobj", telefone.get());

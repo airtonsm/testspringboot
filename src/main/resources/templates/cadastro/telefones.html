@@ -41,14 +41,21 @@ form input[type=submit] {
 
 	<div class="row">
 		<form 	th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}"
-			method="post"  class="col s12">
+			method="post"  class="col s9">
+			
 			<div class="row">
-				<div class="input-field col s6">
+				<div class="input-field col s3">
+					<label class="active" for="id">ID:</label> <input id="id"
+						name="id" class="validator" readonly="readonly">
+				</div>
+
+
+				<div class="input-field col s3">
 					<label class="active" for="numero">Número:</label> <input
 						id="numero" name="numero" class="validator">
 				</div>
 
-				<div class="input-field col s6">
+				<div class="input-field col s3">
 					<label class="active" for="tipo">Tipo:</label> <input id="tipo"
 						name="tipo" class="validator">
 				</div>
@@ -74,9 +81,9 @@ form input[type=submit] {
 		<tr th:each="telefone : ${telefones}">
 			<td th:text="${telefone.id}"></td>
 			<td th:text="${telefone.numero}"></td>
-			<td th:text="${telefone.tipo}"></td>		
-			<td><a th:href="@{editartelefone/{idtelefone}(idtelefone=${telefone.id})}">Editar</a></td>
-			<td><a th:href="@{removertelefone/{idtelefone}(idtelefone=${telefone.id})}">Excluir</a></td>
+			<td th:text="${telefone.tipo}"></td>
+			<td><a th:href="@{/editartelefone/{idtelefone}(idtelefone=${telefone.id})}">Editar</a></td>		
+			<td><a th:href="@{/removertelefone/{idtelefone}(idtelefone=${telefone.id})}">Excluir</a></td>
 		</tr>
 
 
