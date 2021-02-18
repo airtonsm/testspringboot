@@ -3,8 +3,11 @@ package curso.springboot.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +42,18 @@ public class PessoaContoller {
 
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa") // dois asteríscos ignora o que vem antes na
 																			// aurl
-	public ModelAndView salvar(Pessoa pessoa) {
+	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+			modelAndView.addObject("pessoas", pessoasIt);
+			modelAndView.addObject("pessoaobj", pessoa);
+			
+			return modelAndView;
+			
+		}
+		
 		pessoaRepository.save(pessoa);
 
 		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
@@ -122,15 +136,18 @@ public class PessoaContoller {
 	}
 	
 	
-	@GetMapping("/editartelefone/{telefoneid}")
+	/*	Resolve bug in delete later
+	 * 
+	 * 
+	 * @GetMapping("/editartelefone/{telefoneid}") 
 	public ModelAndView editarTelefone(@PathVariable("telefoneid") Long telefoneid) {
 		
-		List<Telefone> telefone = telefoneRepository.getTelefones(telefoneid);
+		Optional<Telefone> telefone = telefoneRepository.findById(telefoneid);
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("telefoneobj", telefone.get());
 		return modelAndView;
-	}
+	}*/
 	
 	@GetMapping("/removertelefone/{idtelefone}")
 	public ModelAndView removerTelefone(@PathVariable("idtelefone") Long idtelefone) {
