@@ -28,6 +28,13 @@ form input[type=submit] {
 	<h3>Cadastro Pessoa</h3><br/>
 
 	<div class="row">
+	<br/>
+	
+		<div th:each = "m : ${msg}">
+			<span th:text = "${m}"></span>
+		</div>
+	
+	<br/>
 	<form action="salvarpessoa" id="formPessoa" method="post" th:object="${pessoaobj}" class="col s12">
 
 			<div class="row">

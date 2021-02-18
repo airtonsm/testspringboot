@@ -1,5 +1,7 @@
 package curso.springboot.controller;
 
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +35,7 @@ public class PessoaContoller {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
+		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
@@ -40,27 +44,35 @@ public class PessoaContoller {
 		return modelAndView;
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa") // dois asteríscos ignora o que vem antes na
-																			// aurl
+	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa") 
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
 		
 		if(bindingResult.hasErrors()) {
+			
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
 			modelAndView.addObject("pessoas", pessoasIt);
 			modelAndView.addObject("pessoaobj", pessoa);
 			
-			return modelAndView;
+			List<String> msg = new ArrayList<String>();
 			
+			for(ObjectError objectError : bindingResult.getAllErrors()) {
+				
+				msg.add(objectError.getDefaultMessage()); // vem das anotações @NotEmpty e outras				
+				
+			}
+			
+			modelAndView.addObject("msg", msg);
+			return modelAndView;			
 		}
 		
 		pessoaRepository.save(pessoa);
 
-		ModelAndView andView = new ModelAndView("cadastro/cadastropessoa");
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
-		andView.addObject("pessoas", pessoasIt);
-		andView.addObject("pessoaobj", new Pessoa());
-		return andView;
+		modelAndView.addObject("pessoas", pessoasIt);
+		modelAndView.addObject("pessoaobj", new Pessoa());
+		return modelAndView;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/listapessoas")
