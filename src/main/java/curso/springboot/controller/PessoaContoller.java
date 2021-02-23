@@ -133,9 +133,31 @@ public class PessoaContoller {
 
 	
 	@PostMapping("**/addfonePessoa/{pessoaid}")
-	public ModelAndView addFonePessoa(Telefone telefone, @PathVariable("pessoaid") Long pessoaid) {
+	public ModelAndView addFonePessoa(Telefone telefone, 
+									@PathVariable("pessoaid") Long pessoaid) {
 		
 		Pessoa pessoa = pessoaRepository.findById(pessoaid).get();
+		
+		if(telefone != null && telefone.getNumero().isEmpty() || telefone.getTipo().isEmpty()) {
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			modelAndView.addObject("pessoaobj", pessoa);
+			modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+			
+			
+			List<String> msg = new ArrayList<String>();
+			if(telefone.getNumero().isEmpty()) {
+			msg.add("Numero deve ser informado");
+			}
+			if(telefone.getTipo().isEmpty()) {
+				msg.add("Tipo deve ser adicionado");
+			}
+			modelAndView.addObject("msg", msg);
+			
+			return modelAndView;
+	
+			
+		}
+		
 		telefone.setPessoa(pessoa);
 		
 		telefoneRepository.save(telefone);
@@ -143,6 +165,8 @@ public class PessoaContoller {
 		ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 		modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
 		modelAndView.addObject("pessoaobj", pessoa);
+	
+		
 		
 		return modelAndView;
 	}

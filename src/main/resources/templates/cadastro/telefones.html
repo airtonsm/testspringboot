@@ -25,7 +25,15 @@ form input[type=submit] {
 </head>
 <body>
 
+	
+
 	<h3>Cadastro Pessoa</h3>
+	
+	<br />
+	<div th:each="m : ${msg}">
+		<span th:text="${m}"></span>
+	</div>
+	<br />
 	
 	<a class="waves-effect waves-light btn-small" href="/cadastropessoa"><--voltar</a>
 	<div th:each="p: ${pessoaobj}">
@@ -41,7 +49,7 @@ form input[type=submit] {
 
 	<div class="row">
 		<form 	th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}"
-			method="post"  class="col s9">
+			method="post"  class="col s9" onsubmit="return validarCampos() ? true : false">
 			
 			<div class="row">
 				<div class="input-field col s3">
@@ -92,5 +100,17 @@ form input[type=submit] {
 
 	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 	<script type="text/javascript" src="materialize/js/materialize.js"></script>
+	
+	<script type="text/javascript">
+	
+		function validarCampos(){				
+			numero = documento.getElementById('numero').value;
+			tipo = documento.getElementById('tipo').value;
+				
+			alert(numero);
+			return true;
+		}
+	
+	</script>
 </body>
 </html>
