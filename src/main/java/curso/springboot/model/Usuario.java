@@ -1,11 +1,16 @@
 package curso.springboot.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +27,18 @@ public class Usuario implements UserDetails {
 	private String login;
 
 	private String senha;
+	
+	@OneToMany(fetch = FetchType.EAGER) // sempre carregar
+	@JoinTable(name = "usuarios_role",
+				joinColumns = @JoinColumn(name = "usuario_id", 
+				referencedColumnName = "id",
+				table = "usuario"),
+		
+			inverseJoinColumns = @JoinColumn(name = "role_id",
+					referencedColumnName = "id",
+					table = "role")) // cria tabela de acesso do usuario
+	
+	private List<Role> roles;
 
 	public Long getId() {
 		return id;
