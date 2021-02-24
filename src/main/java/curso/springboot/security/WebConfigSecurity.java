@@ -33,7 +33,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 	@Override // cria autenticação do usuário com o banco ou em memória
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		
-		// Criptografia em banco
+		// Autenticação em banco
 		auth.userDetailsService(implementacaoUserDetailsService) 
 		.passwordEncoder(new BCryptPasswordEncoder());
 		
