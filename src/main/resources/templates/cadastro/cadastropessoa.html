@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 <meta charset="UTF-8">
@@ -21,64 +22,69 @@ table.striped>tbody>tr:nth-child(odd) {
 form input[type=submit] {
 	color: white;
 }
-h3{
+
+h3 {
 	color: red;
 }
 </style>
 </head>
-<body>	
+<body>
 
-	<h3>Cadastro Funcionários da Empresa</h3><br/>
+	<h3>Cadastro Funcionários da Empresa</h3>
+	<br />
 
 	<div class="row">
-	<br/>
-	
-		<div th:each = "m : ${msg}">
-			<span th:text = "${m}"></span>
+		<br />
+
+		<div th:each="m : ${msg}">
+			<span th:text="${m}"></span>
 		</div>
-	
-	<br/>
-	<form action="salvarpessoa" id="formPessoa" method="post" th:object="${pessoaobj}" class="col s12">
+
+		<br />
+		<form action="salvarpessoa" id="formPessoa" method="post"
+			th:object="${pessoaobj}" class="col s12">
 
 			<div class="row">
 				<div class="input-field col s6">
-					<label for="id" class="active">ID :</label> 
-					<input name="id" th:field="*{id}" id="id"
-						readonly="readonly">
+					<label for="id" class="active">ID :</label> <input name="id"
+						th:field="*{id}" id="id" readonly="readonly">
 				</div>
 
 				<div class="input-field col s6">
-					<label for="nome" class="active">Nome: </label> 
-					<input name="nome" th:field="*{nome}" id="nome" class="validate">
+					<label for="nome" class="active">Nome: </label> <input name="nome"
+						th:field="*{nome}" id="nome" class="validate">
 				</div>
-				
+
 			</div>
 
 
-			<div class="row">			
+			<div class="row">
 				<div class="input-field col s6">
-					<label for="sobrenome" class="active">Sobrenome:</label> 
-					<input name="sobrenome"	th:field="*{sobrenome}" id="sobrenome" class="validate">
+					<label for="sobrenome" class="active">Sobrenome:</label> <input
+						name="sobrenome" th:field="*{sobrenome}" id="sobrenome"
+						class="validate">
 				</div>
-				
+			</div>
+
+			<div class="row" sec:authorize="hasAnyRole('ROLE_TECNICO', 'ROLE_CAIXA')">
 				<div class="input-field col s6">
-					<label for="sobrenome" class="active">Idade: </label> 
-					<input name="idade" th:field="*{idade}" id="idade" class="validate">
-				</div>				
+					<label for="sobrenome" class="active">Idade: </label> <input
+						name="idade" th:field="*{idade}" id="idade" class="validate">
+				</div>
 			</div>
 
 			<div class="row">
 				<div class="input-field col s6">
 					<input class="waves-effect waves-light btn-small" type="submit"
 						value="Salvar">
-					<button class="waves-effect waves-light btn-small" 
-					onclick="document.getElementById('formPessoa').reset();">Limpar</button>
+					<button class="waves-effect waves-light btn-small"
+						onclick="document.getElementById('formPessoa').reset();">Limpar</button>
 				</div>
 			</div>
 
 		</form>
-	
-</div>
+
+	</div>
 
 
 	<br />
@@ -91,9 +97,9 @@ h3{
 					<label for="nomepesquisa" class="active">Pesquisar por nome</label>
 					<input name="nomepesquisa" id="nomepesquisa" class="validate">
 					<input class="waves-effect waves-light btn-small" type="submit"
-						value="Buscar"> 
-						<a class="waves-effect waves-light btn-small" 
-						href="/listapessoas">Listar Pessoas</a>
+						value="Buscar"> <a
+						class="waves-effect waves-light btn-small" href="/listapessoas">Listar
+						Pessoas</a>
 				</div>
 			</div>
 		</form>
@@ -104,7 +110,7 @@ h3{
 
 	<table class="striped">
 
-		<thead >
+		<thead>
 			<tr>
 				<th>ID</th>
 				<th>Nome</th>
@@ -122,8 +128,10 @@ h3{
 			</a></td>
 			<td th:text="${pessoa.sobrenome}"></td>
 			<td th:text="${pessoa.idade}"></td>
-			<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
-			<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td>
+			<td><a
+				th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
+			<td><a
+				th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td>
 		</tr>
 	</table>
 
