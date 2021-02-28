@@ -8,8 +8,9 @@
 <title>Cadastro Pessoa</title>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link type="text/css" rel="stylesheet"	href="/materialize/css/materialize.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet"	href="/materialize/css/materialize.min.css" media="screen,projection" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <style type="text/css">
 table.striped>tbody>tr:nth-child(odd) {
@@ -63,7 +64,7 @@ h3 {
 				</div>
 			</div>
 
-			<div class="row" sec:authorize="hasAnyRole('ROLE_TECNICO', 'ROLE_CAIXA')">
+			<div class="row" sec:authorize="hasAnyRole('ROLE_NOVO')">
 				<div class="input-field col s6">
 					<label for="sobrenome" class="active">Idade: </label> <input
 						name="idade" th:field="*{idade}" id="idade" class="validate">
@@ -132,8 +133,5 @@ h3 {
 		</tr>
 	</table>
 
-
-	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
-	<script type="text/javascript" src="materialize/js/materialize.js"></script>
 </body>
 </html>
