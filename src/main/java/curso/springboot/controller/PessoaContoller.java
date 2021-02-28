@@ -123,7 +123,8 @@ public class PessoaContoller {
 	}
 	
 	@PostMapping("**/pesquisarpessoa")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa ) {
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa, 
+			@RequestParam("pesqsexo") String pesqsexo ) {		
 		
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
