@@ -151,13 +151,26 @@ h3 {
 
 	<br />
 	<br />
-
+<fieldset>
+	<legend>Campo de Pesquisa</legend>
 	<div class="row">
 		<form action="pesquisarpessoa" method="post" class="col s12">
 			<div class="row">
-				<div class="input-field col s 12">
+				<div class="input-field col s 6">
 					<label for="nomepesquisa" class="active">Pesquisar por nome</label>
 					<input name="nomepesquisa" id="nomepesquisa" class="validate">
+				</div>	
+
+				<div class="input-field col s 6">
+					<label for="pesqsexo" class="active">Pesquisa Por Sexo</label>
+					<select class="browser-default" name="pesqsexo" id="pesqsexo">
+						<option value="" disabled selected>--[Selecione]--</option>
+						<option value="MASCULINO" th:text="Masculino" />
+						<option value="FEMININO" th:text="Feminio" />
+					</select>
+				</div>
+						
+				<div class="input-field col s 12">
 					<input class="waves-effect waves-light btn-small" type="submit"
 						value="Buscar"> <a
 						class="waves-effect waves-light btn-small" href="/listapessoas">Listar
@@ -166,7 +179,7 @@ h3 {
 			</div>
 		</form>
 	</div>
-
+</fieldset>
 	<br />
 	<br />
 
@@ -180,7 +193,7 @@ h3 {
 				<th>Idade</th>
 				<th>Editar</th>
 				<th>Excluir</th>
-			<tr>
+			</tr>
 		</thead>
 
 		<tr th:each="pessoa : ${pessoas}">
@@ -248,7 +261,7 @@ h3 {
                             else {
                                 //CEP pesquisado não foi encontrado.
                                 limpa_formulário_cep();
-                                alert("CEP não encontrado.");
+								alert("CEP não encontrado.");
                             }
                         });
                     } //end if.
