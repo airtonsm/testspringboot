@@ -47,6 +47,8 @@ public class PessoaContoller {
 	@RequestMapping(method = RequestMethod.POST, value = "**/salvarpessoa") 
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
 		
+		pessoa.setTelefone(telefoneRepository.getTelefones(pessoa.getId()));
+		
 		if(bindingResult.hasErrors()) {
 			
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
