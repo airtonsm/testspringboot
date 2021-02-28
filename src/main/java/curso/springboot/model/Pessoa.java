@@ -48,8 +48,8 @@ public class Pessoa implements Serializable {
 	
 	private String ibge;
 	
+	private String sexopessoa;
 		
-
 	public List<Telefone> getTelefone() {
 		return telefone;
 	}
@@ -138,6 +138,13 @@ public class Pessoa implements Serializable {
 		this.ibge = ibge;
 	}
 	
+	public String getSexopessoa() {
+		return sexopessoa;
+	}
+	
+	public void setSexopessoa(String sexopessoa) {
+		this.sexopessoa = sexopessoa;
+	}
 	
 
 }
