@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -21,7 +22,7 @@ public class Pessoa implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	@NotNull(message = "Nome não pode ser nulo")
 	@NotEmpty(message = "Nome não pode ser vazio")
 	private String nome;
@@ -29,27 +30,30 @@ public class Pessoa implements Serializable {
 	@NotNull(message = "Sobrenome não pode ser nulo")
 	@NotEmpty(message = "Sobrenome não pode ser vazio")
 	private String sobrenome;
-	
+
 	@Min(value = 18, message = "Idade invalida")
 	private int idade;
 
-	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade =  CascadeType.ALL)
+	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefone;
-	
+
 	private String cep;
-	
+
 	private String rua;
-	
+
 	private String bairro;
-	
+
 	private String cidade;
-	
+
 	private String uf;
-	
+
 	private String ibge;
-	
+
 	private String sexopessoa;
-		
+
+	@ManyToOne
+	private Profissao profissao;
+
 	public List<Telefone> getTelefone() {
 		return telefone;
 	}
@@ -137,14 +141,21 @@ public class Pessoa implements Serializable {
 	public void setIbge(String ibge) {
 		this.ibge = ibge;
 	}
-	
+
 	public String getSexopessoa() {
 		return sexopessoa;
 	}
-	
+
 	public void setSexopessoa(String sexopessoa) {
 		this.sexopessoa = sexopessoa;
 	}
-	
+
+	public void setProfissao(Profissao profissao) {
+		this.profissao = profissao;
+	}
+
+	public Profissao getProfissao() {
+		return profissao;
+	}
 
 }
