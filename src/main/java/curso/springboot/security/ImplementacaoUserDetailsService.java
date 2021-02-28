@@ -1,7 +1,7 @@
 package curso.springboot.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,11 +27,11 @@ public class ImplementacaoUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Usuário não foi encontrado");
 		}
 
-		return new org.springframework.security.core.userdetails.User(
-				usuario.getLogin(), 
+		return new User(usuario.getLogin(), 
 				usuario.getPassword(), true,
 				true, true, usuario.isEnabled(), 
-				usuario.getAuthorities());
+				usuario.getAuthorities()
+				);
 
 		// auxilia na validação do usuario
 	}
