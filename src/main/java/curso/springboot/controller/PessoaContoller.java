@@ -24,12 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 import curso.springboot.model.Pessoa;
 import curso.springboot.model.Telefone;
 import curso.springboot.repository.PessoaRepository;
+import curso.springboot.repository.ProfissaoRepository;
 import curso.springboot.repository.TelefoneRepository;
 
 @Controller
 public class PessoaContoller {
 
-	@Autowired
+	@Autowired /*injeta as depedência do repositório*/
 	private PessoaRepository pessoaRepository;
 	
 	@Autowired
@@ -37,6 +38,9 @@ public class PessoaContoller {
 	
 	@Autowired
 	private ReportUtil reportUtil;
+	
+	@Autowired
+	private ProfissaoRepository profissaoRepository;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
@@ -45,7 +49,7 @@ public class PessoaContoller {
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
 		modelAndView.addObject("pessoas", pessoasIt);
-
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		return modelAndView;
 	}
 
@@ -60,6 +64,7 @@ public class PessoaContoller {
 			Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
 			modelAndView.addObject("pessoas", pessoasIt);
 			modelAndView.addObject("pessoaobj", pessoa);
+			modelAndView.addObject("profissoes", profissaoRepository.findAll());
 			
 			List<String> msg = new ArrayList<String>();
 			
@@ -79,6 +84,7 @@ public class PessoaContoller {
 		Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
 		modelAndView.addObject("pessoas", pessoasIt);
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		return modelAndView;
 	}
 
@@ -111,6 +117,7 @@ public class PessoaContoller {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaobj", pessoa.get());
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		return modelAndView;
 
 	}
